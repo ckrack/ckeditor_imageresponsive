@@ -33,7 +33,7 @@ When using static sizes, you should check for the original dimensions and only u
 When putting the callback to CKEditor into your custom filebrowser, you can pass in a complete srcset.
 This is done via the third parameter, which is executed in the scope of the dialog, if it is a function.
 
-    `window.parent.CKEDITOR.tools.callFunction(callback, "/images/upload.jpg", function() {
+    window.parent.CKEDITOR.tools.callFunction(callback, "/images/upload.jpg", function() {
         // Get the reference to a dialog window.
         var element,
             dialog = this.getDialog();
@@ -45,4 +45,4 @@ This is done via the third parameter, which is executed in the scope of the dial
             if ( element )
                 element.setValue( 'upload-small.jpg 100w, upload-medium.jpg 500w, upload-big.jpg 1000w' );
         }
-    });`
+    });
