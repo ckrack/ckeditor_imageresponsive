@@ -9,7 +9,7 @@ This is the original image2 plugin (enhanced image plugin) by CKSource, edited b
 ## Installation
 
  1. Download the package.
- 2. Extract 'imageresponsive' directory into ckeditor/plugins/ directory.
+ 2. Extract files and save them in ckeditor/plugins/imageresponsive directory.
  3. Enable the plugin:
     `config.extraPlugins = 'imageresponsive';`
 
