@@ -17,6 +17,6 @@ CKEDITOR.plugins.setLang( 'imageresponsive', 'de', {
 	title: 'Bild-Eigenschaften',
 	uploadTab: 'Hochladen',
 	urlMissing: 'Imagequelle URL fehlt.',
-	sizes: 'Responsive Größenabgrenzung',
+	sizes: 'Größenabgrenzung (responsive)',
 	srcset: 'Quellenverzeichnis (responsive)',
 } );
