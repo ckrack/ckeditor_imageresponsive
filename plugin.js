@@ -12,7 +12,7 @@
 	CKEDITOR.plugins.add( 'imageresponsive', {
 		lang: 'en,de',
 		requires: 'widget,dialog,image2',
-		icons: 'image',
+
 		beforeInit: function( editor ) {
 			editor.widgets.on('instanceCreated', function(e){
 				// figure out if this is the image dialog.
