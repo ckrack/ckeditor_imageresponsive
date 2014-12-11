@@ -8,90 +8,90 @@
 
 ( function() {
 
-	CKEDITOR.plugins.add( 'imageresponsive', {
-		lang: 'en,de',
-		requires: 'widget,dialog,image2',
-		init: function(editor) {
+    CKEDITOR.plugins.add( 'imageresponsive', {
+        lang: 'en,de',
+        requires: 'widget,dialog,image2',
+        init: function(editor) {
 
-			// bind to widget#instanceCreated so we can see when the image widget is about to be initiated
-			editor.widgets.on('instanceCreated', function(e) {
+            // bind to widget#instanceCreated so we can see when the image widget is about to be initiated
+            editor.widgets.on('instanceCreated', function(e) {
 
-				var widget = e.data;
+                var widget = e.data;
 
-				// figure out if this is the image dialog.
-				if(widget.name != 'image')
-					return;
+                // figure out if this is the image dialog.
+                if(widget.name != 'image')
+                    return;
 
-				// enable this feature for ACF
-				editor.addFeature({
-					name: 'Responsive Images',
-					allowedContent: 'img[srcset,sizes]'
-				});
+                // enable this feature for ACF
+                editor.addFeature({
+                    name: 'Responsive Images',
+                    allowedContent: 'img[srcset,sizes]'
+                });
 
-				// register handler for data
-				widget.on('data', function(e) {
-					widget = e.data;
-					// keep srcset & sizes attributes only when set.
-					if(widget.srcset)
-						e.sender.parts.image.setAttribute('srcset', widget.srcset);
-					else
-						e.sender.parts.image.removeAttribute('srcset');
+                // register handler for data
+                widget.on('data', function(e) {
+                    widget = e.data;
+                    // keep srcset & sizes attributes only when set.
+                    if(widget.srcset)
+                        e.sender.parts.image.setAttribute('srcset', widget.srcset);
+                    else
+                        e.sender.parts.image.removeAttribute('srcset');
 
-					if(widget.sizes)
-						e.sender.parts.image.setAttribute('sizes', widget.sizes);
-					else
-						e.sender.parts.image.removeAttribute('sizes');
-				});
+                    if(widget.sizes)
+                        e.sender.parts.image.setAttribute('sizes', widget.sizes);
+                    else
+                        e.sender.parts.image.removeAttribute('sizes');
+                });
 
-				// set data from existing variables.
-				var image = widget.element;
+                // set data from existing variables.
+                var image = widget.element;
 
-				// since the img-tag can be wrapped with a caption, make sure we use the right element.
-				if(image.getName() != 'img')
-					image = image.findOne('img');
+                // since the img-tag can be wrapped with a caption, make sure we use the right element.
+                if(image.getName() != 'img')
+                    image = image.findOne('img');
 
-				var data = {
-					srcset: image.getAttribute( 'srcset' ) || '',
-					sizes: image.getAttribute( 'sizes' ) || '',
-				};
-				widget.setData(data);
-			});
+                var data = {
+                    srcset: image.getAttribute( 'srcset' ) || '',
+                    sizes: image.getAttribute( 'sizes' ) || '',
+                };
+                widget.setData(data);
+            });
 
-			CKEDITOR.on( 'dialogDefinition', function(e) {
-				// make sure this is the right editor (there can be more on one page) and the right dialog.
-				if ((e.editor != editor) || (e.data.name != 'image2'))
-					return;
+            CKEDITOR.on( 'dialogDefinition', function(e) {
+                // make sure this is the right editor (there can be more on one page) and the right dialog.
+                if ((e.editor != editor) || (e.data.name != 'image2'))
+                    return;
 
-				// Get a reference to the "Link Info" tab.
-				var infoTab = e.data.definition.getContents( 'info' );
+                // Get a reference to the "Link Info" tab.
+                var infoTab = e.data.definition.getContents( 'info' );
 
-				// Add text fields for srcset and sizes.
-				infoTab.add({
-					id: 'srcset',
-					type: 'text',
-					requiredContent: 'img[srcset]',
-					label: e.editor.lang.imageresponsive.srcset,
-					setup: function(widget) {
-						this.setValue(widget.data.srcset);
-					},
+                // Add text fields for srcset and sizes.
+                infoTab.add({
+                    id: 'srcset',
+                    type: 'text',
+                    requiredContent: 'img[srcset]',
+                    label: e.editor.lang.imageresponsive.srcset,
+                    setup: function(widget) {
+                        this.setValue(widget.data.srcset);
+                    },
                     commit: function (widget) {
                         widget.setData('srcset', this.getValue());
                     }
-					});
+                    });
 
-				infoTab.add({
-					id: 'sizes',
-					type: 'text',
-					requiredContent: 'img[sizes]',
-					label: e.editor.lang.imageresponsive.sizes,
-					setup: function(widget) {
-						this.setValue(widget.data.sizes);
-					},
+                infoTab.add({
+                    id: 'sizes',
+                    type: 'text',
+                    requiredContent: 'img[sizes]',
+                    label: e.editor.lang.imageresponsive.sizes,
+                    setup: function(widget) {
+                        this.setValue(widget.data.sizes);
+                    },
                     commit: function (widget) {
                         widget.setData('sizes', this.getValue());
                     }
-				});
-			});
-		}
-	} );
+                });
+            });
+        }
+    } );
 } )();
