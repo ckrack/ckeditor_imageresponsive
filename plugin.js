@@ -11,13 +11,7 @@
 	CKEDITOR.plugins.add( 'imageresponsive', {
 		lang: 'en,de',
 		requires: 'widget,dialog,image2',
-		allowedContent:  {
-			img: {
-				attributes: 'srcset,sizes'
-			}
-		},
-
-		init: function( editor ) {
+		init: function(editor) {
 
 			// bind to widget#instanceCreated so we can see when the image widget is about to be initiated
 			editor.widgets.on('instanceCreated', function(e) {
@@ -27,6 +21,12 @@
 				// figure out if this is the image dialog.
 				if(widget.name != 'image')
 					return;
+
+				// enable this feature for ACF
+				editor.addFeature({
+					name: 'Responsive Images',
+					allowedContent: 'img[srcset,sizes]'
+				});
 
 				// register handler for data
 				widget.on('data', function(e) {
