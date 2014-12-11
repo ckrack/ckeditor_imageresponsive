@@ -15,7 +15,7 @@ Two textfields are added to the dialog window, and it is possible to integrate w
  3. Enable the plugin:
     `config.extraPlugins = 'imageresponsive';`
 
-**Note:** Dependencies: Requires the following plugins to work: Image2, Widget, Line Utilities, Dialog, Clipboard.
+**Dependencies:** Requires the following plugins to work: Image2, Widget, Line Utilities, Dialog, Clipboard.
 
 ## How to use
 
