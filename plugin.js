@@ -11,8 +11,24 @@
 	CKEDITOR.plugins.add( 'imageresponsive', {
 		lang: 'en,de',
 		requires: 'widget,dialog,image2',
-		init: function(editor) {
+		beforeInit: function(editor) {
+			editor.on('widgetDefinition', function(e) {
+				var widget = e.data;
+				// figure out if this is the image dialog.
+				if(widget.name != 'image')
+					return;
 
+				// should not happen but anyway...
+				if(!widget.allowedContent.img || !widget.allowedContent.img.attributes)
+					return;
+
+				if(widget.allowedContent.img.attributes.indexOf('srcset') == -1)
+					widget.allowedContent.img.attributes += ',srcset'
+				if(widget.allowedContent.img.attributes.indexOf('sizes') == -1)
+					widget.allowedContent.img.attributes += ',sizes'
+			});
+		},
+		init: function(editor) {
 			// bind to widget#instanceCreated so we can see when the image widget is about to be initiated
 			editor.widgets.on('instanceCreated', function(e) {
 
@@ -21,12 +37,6 @@
 				// figure out if this is the image dialog.
 				if(widget.name != 'image')
 					return;
-
-				// enable this feature for ACF
-				editor.addFeature({
-					name: 'Responsive Images',
-					allowedContent: 'img[srcset,sizes]'
-				});
 
 				// register handler for data
 				widget.on('data', function(e) {
@@ -52,7 +62,7 @@
 
 				var data = {
 					srcset: image.getAttribute( 'srcset' ) || '',
-					sizes: image.getAttribute( 'sizes' ) || '',
+					sizes: image.getAttribute( 'sizes' ) || ''
 				};
 				widget.setData(data);
 			});
@@ -74,9 +84,9 @@
 					setup: function(widget) {
 						this.setValue(widget.data.srcset);
 					},
-                    commit: function (widget) {
-                        widget.setData('srcset', this.getValue());
-                    }
+					commit: function (widget) {
+						widget.setData('srcset', this.getValue());
+					}
 					});
 
 				infoTab.add({
@@ -87,9 +97,9 @@
 					setup: function(widget) {
 						this.setValue(widget.data.sizes);
 					},
-                    commit: function (widget) {
-                        widget.setData('sizes', this.getValue());
-                    }
+					commit: function (widget) {
+						widget.setData('sizes', this.getValue());
+					}
 				});
 			});
 		}
